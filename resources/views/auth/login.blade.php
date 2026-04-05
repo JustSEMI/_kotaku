@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN KOTAKU</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css?v=3') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}"> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <footer class="login-footer">
-            &copy; 2026 KOTAKU (Kotak Amal Terpadu & Terukur). Dibuat dengan <i class="fas fa-heart" style="color: #ff6b6b;"></i> oleh JustSEMI.
+            &copy; 2026 KOTAKU (Kotak Amal Terpadu & Terukur). Dibuat dengan <i class="fas fa-heart" style="color: #ff6b6b;"></i> oleh Kelompok 3 TKK (B).
         </footer>
     </div>
 </body>
