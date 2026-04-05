@@ -65,3 +65,18 @@
     font-weight: 600;
     font-size: 1.2rem;
 }
+
+@media (max-width: 768px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .summary-card {
+        padding: 20px;
+    }
+    
+    .chart-card {
+        padding: 20px;
+    }
+}

@@ -128,4 +128,45 @@ body.dashboard-body::after {
     .sidebar { transform: translateX(-100%); }
     .sidebar.collapsed { transform: translateX(0); }
     .main-content { margin-left: 0; }
+
+    .app-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .nav-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .sidebar {
+        transform: translateX(-100%); 
+        z-index: 1050;
+        width: 250px; 
+    }
+
+    .sidebar.show-mobile {
+        transform: translateX(0);
+    }
+    
+    .content-wrapper {
+         padding: 15px 10px;
+    }
 }

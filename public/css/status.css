@@ -60,3 +60,15 @@
     font-weight: 500;
 }
 .btn-clear-log:hover { background: #ff4d4d; color: #ffffff; }
+
+@media (max-width: 768px) {
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sensor-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
