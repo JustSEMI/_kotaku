@@ -12,9 +12,9 @@ Route::get('/panel', function () {
     return view('panel');
 });
 
-Route::get('/report', function () {
+Route::get('/laporan', function () {
     if (!session('is_logged_in')) return redirect('/');
-    return view('report');
+    return view('laporan');
 });
 
 Route::get('/status', function () {

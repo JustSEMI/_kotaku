@@ -1,8 +1,12 @@
-const sidebar = document.getElementById('sidebar');
-const mainContent = document.getElementById('main-content');
-const toggleBtn = document.getElementById('toggle-sidebar');
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('toggle-sidebar');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
 
-toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-    mainContent.classList.toggle('collapsed');
+    if(toggleBtn && sidebar && mainContent) {
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+    }
 });

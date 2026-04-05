@@ -1,0 +1,76 @@
+.settings-card { 
+    padding: 30px; 
+    max-width: 700px;
+}
+
+.card-title { 
+    color: #ffffff; 
+    margin-bottom: 25px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-size: 1.2rem; 
+}
+
+.toggle-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.toggle-group:last-of-type { border-bottom: none; }
+
+.toggle-info strong { color: #ffffff; display: block; margin-bottom: 5px; font-size: 15px; }
+.toggle-info span { color: rgba(255, 255, 255, 0.5); font-size: 13px; }
+
+.switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255,255,255,0.1); 
+    transition: .4s; 
+    border-radius: 34px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.slider:before {
+    position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background-color: #a0a0a0; 
+    transition: .4s; 
+    border-radius: 50%;
+}
+input:checked + .slider { background-color: #800080; border-color: #800080; }
+input:checked + .slider:before { transform: translateX(24px); background-color: #ffffff; }
+
+.input-group { margin-top: 25px; margin-bottom: 20px; }
+.input-group label { display: block; color: rgba(255,255,255,0.8); margin-bottom: 10px; font-size: 14px; }
+.input-group input {
+    width: 100%; 
+    padding: 12px 15px; 
+    background: rgba(0,0,0,0.3); /* Transparan gelap */
+    border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 8px; 
+    color: #ffffff;
+    font-family: inherit; 
+    transition: 0.3s;
+}
+.input-group input:focus { outline: none; border-color: #800080; background: rgba(0,0,0,0.5); }
+
+.btn-kalibrasi {
+    background: rgba(255, 255, 255, 0.1); 
+    color: #ffffff; 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 24px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: 0.3s;
+    font-family: inherit; 
+    font-weight: 600; 
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+    margin-top: 25px;
+}
+.btn-kalibrasi:hover { background: #ffffff; color: #121212; }

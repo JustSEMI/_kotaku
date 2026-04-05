@@ -1,0 +1,67 @@
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.summary-card .info p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-card .info h3 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.summary-card i {
+    font-size: 32px;
+    padding: 18px;
+    border-radius: 16px;
+}
+
+.icon-wallet { 
+    color: #ffa500;
+    background: rgba(255, 165, 0, 0.15);
+}
+.icon-trx { 
+    color: #4a90e2;
+    background: rgba(74, 144, 226, 0.15);
+}
+.icon-status { 
+    color: #50c878;
+    background: rgba(80, 200, 120, 0.15);
+}
+.hardware-card h3 { color: #50c878; }
+
+.chart-card {
+    padding: 30px;
+    width: 100%;
+}
+
+.chart-card h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
