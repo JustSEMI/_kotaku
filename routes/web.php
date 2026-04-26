@@ -1,28 +1,36 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PanelController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AuthController::class, 'index']);
-Route::post('/login-process', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout']);
-
-Route::get('/panel', function () {
-    if (!session('is_logged_in')) return redirect('/');
-    return view('panel');
+// LOGIN PAGE
+Route::get('/', function () {
+    return redirect()->route('dashboard');
 });
 
-Route::get('/laporan', function () {
-    if (!session('is_logged_in')) return redirect('/');
-    return view('laporan');
+// ANTI BRUTE FORCE LOGIN
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'authenticate'])
+        ->middleware('throttle:10,1') 
+        ->name('login.post');
 });
 
-Route::get('/status', function () {
-    if (!session('is_logged_in')) return redirect('/');
-    return view('status');
+// PROTEKSI HALAMAN DASHBOARD & PANEL
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/panel', [PanelController::class, 'index'])->name('panel');
+    Route::get('/panel/export', [PanelController::class, 'exportCsv'])->name('panel.export');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::get('/settings', function () {
-    if (!session('is_logged_in')) return redirect('/');
-    return view('settings');
-});
+// PASSWORD RESET
+Route::get('/forgotpw', [ResetPasswordController::class, 'showForgotForm'])->name('password.request');
+Route::post('/forgotpw', [ResetPasswordController::class, 'checkEmail'])->name('password.check');
+Route::get('/resetpw', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/resetpw', [ResetPasswordController::class, 'updatePassword'])->name('password.update');

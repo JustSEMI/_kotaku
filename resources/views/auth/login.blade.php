@@ -1,49 +1,57 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN KOTAKU</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}"> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Login | KOTAKU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
+
 <body>
 
-    <div class="login-page-wrapper">
-        <div class="login-container">
-            <div class="login-box">
-                <div class="login-header">LOGIN KOTAKU</div>
-                @if(session('error'))
-                    <div style="color: #ff4d4d; background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.3); padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 0.9rem;">
-                        {{ session('error') }}
-                    </div>
-                @endif
-                <form method="POST" action="/login-process">
-                    @csrf
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <div class="position-relative">
-                            <i class="fas fa-user input-icon"></i> 
-                            <input type="text" id="username" name="username" class="form-input" placeholder="Username" required autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="position-relative">
-                            <i class="fas fa-lock input-icon"></i>
-                            <input type="password" id="password" name="password" class="form-input" placeholder="Password" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="login-button">Login</button>
-                    </div>
-                </form>
-            </div>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>KOTAKU</h1>
+            <p>Kotak Amal Terpadu & Terukur</p>
         </div>
-        <footer class="login-footer">
-            &copy; 2026 KOTAKU (Kotak Amal Terpadu & Terukur). Dibuat dengan <i class="fas fa-heart" style="color: #ff6b6b;"></i> oleh Kelompok 3 TKK (B).
-        </footer>
+
+        @if (session('status'))
+            <div style="color: #10b981; font-size: 0.875rem; margin-bottom: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); padding: 10px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <form action="{{ route('login.post') }}" method="POST" class="login-form">
+            @csrf
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="admin@kotaku.local"
+                    required autofocus>
+
+                @error('email')
+                <span style="color: #ef4444; font-size: 12px; margin-top: 5px; display: block;">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="input-group">
+                <div class="password-header">
+                    <label for="password">Password</label>
+                    <a href="{{ route('password.request') }}" class="forgot-link">Forgot?</a>
+                </div>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-login">Login Masuk</button>
+        </form>
+
+        <div class="login-footer">
+            <p>&copy; 2026 KOTAKU System. Built with precision.</p>
+        </div>
     </div>
+
 </body>
+
 </html>

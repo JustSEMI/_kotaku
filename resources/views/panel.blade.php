@@ -1,74 +1,94 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - KOTAKU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <title>Panel Utama | KOTAKU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/panel.css') }}">
-    <link rel="stylesheet" href="{{ url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css') }}">
-    <script src="{{ url('https://cdn.jsdelivr.net/npm/chart.js') }}"></script>
 </head>
-<body class="dashboard-body">
-    <div class="app-container">
-        <aside class="sidebar" id="sidebar">
+<body>
+
+    <div class="panel-layout">
+        <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>KOTAKU</h2>
             </div>
-            <ul class="sidebar-menu">
-                <li class="active"><a href="{{ url('/panel') }}"><i class="fas fa-home"></i> <span>Panel</span></a></li>
-                <li><a href="{{ url('/laporan') }}"><i class="fas fa-chart-line"></i> <span>Laporan</span></a></li>
-                <li><a href="{{ url('/status') }}"><i class="fas fa-microchip"></i> <span>Status Perangkat</span></a></li>
-                <li><a href="{{ url('/settings') }}"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
-            </ul>
-        </aside>
-        <main class="main-content" id="main-content">
-            <nav class="navbar">
-                <div class="nav-left">
-                    <button class="toggle-btn" id="toggle-sidebar">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="nav-title">Dashboard</div>
-                </div>
-                <div class="user-info">
-                    <span>Halo, <?= htmlspecialchars(session('user')); ?></span>
-                    <a href="{{ url('/logout') }}" class="btn-logout">Logout</a>
-                </div>
+            
+            <nav class="sidebar-nav">
+                <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+                <a href="{{ route('panel') }}" class="nav-link active">Panel Utama</a>
+                <a href="#" class="nav-link">Pengaturan</a>
             </nav>
-            <div class="content-wrapper">
-                
-                <div class="summary-grid">
-                    <div class="summary-card glass-panel">
-                        <div class="info">
-                            <p>Total Pemasukan</p>
-                            <h3>-</h3>
-                        </div>
-                        <i class="fas fa-wallet icon-wallet"></i>
-                    </div>
-                    <div class="summary-card glass-panel">
-                        <div class="info">
-                            <p>Total Transaksi</p>
-                            <h3>-</h3>
-                        </div>
-                        <i class="fas fa-exchange-alt icon-trx"></i>
-                    </div>
-                    <div class="summary-card glass-panel hardware-card">
-                        <div class="info">
-                            <p>Status Hardware</p>
-                            <h3>-</h3>
-                        </div>
-                        <i class="fas fa-wifi icon-status"></i>
-                    </div>
-                </div>
-                <div class="chart-card glass-panel">
-                    <h3>Grafik Pemasukan Harian</h3>
-                    <canvas id="myChart"></canvas>
-                </div>
 
+            <div class="sidebar-footer">
+                <span class="user-greeting">Halo, {{ Auth::user()->username }}</span>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-logout-sidebar">Logout</button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="panel-content">
+            <header class="content-header">
+                <h1>Overview Sistem</h1>
+                <p>Pantau status perangkat dan riwayat dana secara *real-time*.</p>
+            </header>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <p class="card-title">Total Saldo Terkumpul</p>
+                    <h2 class="card-value">Rp {{ number_format($totalSaldo, 0, ',', '.') }}</h2>
+                    <p class="card-desc">Total keseluruhan sistem</p>
+                </div>
+                <div class="summary-card">
+                    <p class="card-title">Pemasukan Bulan Ini</p>
+                    <h2 class="card-value">Rp {{ number_format($pemasukanBulanIni, 0, ',', '.') }}</h2>
+                    <p class="card-desc">Dari {{ $jumlahTransaksi }} kali transaksi sensor</p>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title-wrapper">
+                        <p class="card-title">Status NodeMCU</p>
+                        <span class="status-dot online"></span> 
+                    </div>
+                    <h2 class="card-value">Online</h2>
+                    <p class="card-desc">Menunggu data masuk...</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Riwayat Pemasukan Terakhir</h3>
+                    <a href="{{ route('panel.export') }}" class="btn-sm" style="text-decoration: none;">Unduh Laporan</a>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>ID Sensor</th>
+                            <th>Status Data</th>
+                            <th class="text-right">Estimasi Nominal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($riwayat as $item)
+                        <tr>
+                            <td>{{ $item->created_at->format('d M Y, H:i') }} WIB</td>
+                            <td>{{ $item->sensor_id }}</td>
+                            <td><span class="badge success">{{ $item->status }}</span></td>
+                            <td class="text-right">Rp {{ number_format($item->amount, 0, ',', '.') }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 2rem; color: #6b7280;">Belum ada data transaksi masuk.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+
 </body>
 </html>
