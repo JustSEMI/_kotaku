@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Setting;
 use Carbon\Carbon;
 
 class PanelController extends Controller
@@ -22,10 +23,28 @@ class PanelController extends Controller
         $jumlahTransaksi = Transaction::whereMonth('created_at', Carbon::now()->month)->count();
 
         // AMBIL TRANSAKSI TERBARU
-        $riwayat = Transaction::latest()->take(5)->get();
+        $settings = Setting::pluck('value', 'key')->toArray();
+        $transactionLimit = $settings['transaction_limit'] ?? 5;
+        $riwayat = Transaction::latest()->take($transactionLimit)->get();
 
-        // SEND DATA KE VIEW
-        return view('panel', compact('totalSaldo', 'pemasukanBulanIni', 'jumlahTransaksi', 'riwayat'));
+        // PROGRESS TARGET
+        $totalSaldo = Transaction::sum('amount');
+        $settings = Setting::pluck('value', 'key')->toArray();
+        $targetSaldo = (int) ($settings['target_saldo'] ?? 5000000);
+        $persentaseTarget = ($totalSaldo / $targetSaldo) * 100;
+        if ($persentaseTarget > 100) $persentaseTarget = 100;
+
+        // SETTING
+        $settings = Setting::pluck('value', 'key')->toArray();
+        $targetSaldo = $settings['target_saldo'] ?? 5000000;
+        $refreshInterval = $settings['refresh_interval'] ?? 30;
+        $highlightThreshold = (int) ($settings['highlight_threshold'] ?? 50000);
+
+        // TARGET SALDO
+        $persentaseTarget = ($totalSaldo / $targetSaldo) * 100;
+        if ($persentaseTarget > 100) $persentaseTarget = 100;
+
+        return view('panel', compact('totalSaldo', 'pemasukanBulanIni', 'jumlahTransaksi', 'targetSaldo', 'riwayat', 'persentaseTarget', 'refreshInterval', 'highlightThreshold'));
     }
 
     public function exportCsv()

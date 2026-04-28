@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    display: none;
+}w
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -31,7 +35,7 @@ body {
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.25rem;
     flex: 1;
 }
 
@@ -151,7 +155,6 @@ body {
 .data-table th, .data-table td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #1f1f1f;
     font-size: 0.875rem;
 }
 

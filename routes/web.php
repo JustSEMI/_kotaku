@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\PanelController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 // LOGIN PAGE
@@ -26,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/panel', [PanelController::class, 'index'])->name('panel');
     Route::get('/panel/export', [PanelController::class, 'exportCsv'])->name('panel.export');
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+    Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
